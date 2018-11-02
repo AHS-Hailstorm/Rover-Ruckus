@@ -9,7 +9,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction;
 @TeleOp(name = "TankDrive TeleOp Example", group = "ARC")
 public class TankDriveTeleOpExample extends OpMode {
 
-  private static final int ticksPerInch = 1000, ticksPer360 = 1440 * 4;
+  private static final int WHEEL_DIAMETER_IN = 4, TICKS_PER_WHEEL = 1440,
+          TICKS_PER_INCH = (int)(TICKS_PER_WHEEL / (Math.PI * WHEEL_DIAMETER_IN) + 0.5),
+          TICKS_PER_360 = (int)(TICKS_PER_INCH * Math.PI * 10.55 + 0.5);
+
   private TankDrive tankDrive;
 
   @Override
@@ -19,7 +22,7 @@ public class TankDriveTeleOpExample extends OpMode {
     motorL.setDirection(Direction.REVERSE);
 
     tankDrive = TankDrive.fromMotors(
-        motorL, motorR, this, ticksPerInch, ticksPer360);
+        motorL, motorR, this, TICKS_PER_INCH, TICKS_PER_360);
   }
 
   @Override
